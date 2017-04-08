@@ -36,22 +36,26 @@ def index():
 @app.route('/update',methods = ['POST'])
 def add_into_db():
 
+	#getting post requests
+
+
+	url = str(request.form['url'])
+	time = str(request.form['time'])
+	tabid = str(request.form['tabid'])
+
 	#Database Connection
 
 	mariadb_connection = mariadb.connect(host="localhost",user='root', password='lugia', database='t1')
 	cursor = mariadb_connection.cursor(prepared = True)
-	cursor.execute("SELECT COUNT(id) FROM t1")
-	cp = dictfetchall(cursor)
+	cursor.execute("INSERT INTO t1(url,time) VALUES (?,?)",(url,time))
+	#cp = dictfetchall(cursor)
 	cursor.close()
-	n = str((cp[0]['COUNT(id)']))
+	mariadb_connection.commit()
+	mariadb_connection.close()
+	#n = str((cp[0]['COUNT(id)']))
 
-	#getting post requests
-	print(request.form)
-	print("ADFAD")
-	url = str(request.form['url'])
-	time = (request.form['time'])
-	tabid = (request.form['tabid'])
-	return str(url)
+
+	return "Done!"
 
 
 if __name__ == '__main__':
