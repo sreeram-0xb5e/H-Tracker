@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Project",
+  "description":"Testing the app",
+  "version": "1",
+
+  "browser_action": {
+    "default_icon": "icon_128.png",
+    "default_popup": "index.html",
+    "default_title": "Project"
+  },
+  "permissions": [
+      "<all_urls>","webRequest","webRequestBlocking","tabs"
+  ],
+  "background":{"script":["background.js"]},
+  
+}

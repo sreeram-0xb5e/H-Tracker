@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <style media="screen">
+            input {
+                border: none;
+                border-bottom: 1px solid red;
+                margin: 8px 0;
+                height: 25px;
+            }
+            input:fucus{
+                border: 3px solid #555;
+            }
+            button {
+                background-color: green;
+                border: none;
+                color: white;
+                padding: 10px 30px;
+                text-decoration: inherit;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            body{
+                height: 100px;
+                width: 225px;
+                font-style: oblique;
+            }
+        </style>
+        <script type="text/javascript" src="background.js"></script>
+    </head>
+    <body>
+        <center>
+        <h1>Testing</h1>
+        <form action="http://127.0.0.1:5000/update" method="POST">
+            <input type="text" name="url" placeholder="URL" id="url" required><br>
+            <input type="text" name="time" placeholder="TIME" id="time" required><br>
+            <input type="text" name="tabid" placeholder="TAB_ID" id="tabid"><br><br>
+            <button type="submit" name="button" id="submit">Submit the data</button>
+        </form>
+        </center>
+    </body>
+</html>
