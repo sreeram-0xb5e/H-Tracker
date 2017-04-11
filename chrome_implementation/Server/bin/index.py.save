@@ -1,0 +1,68 @@
+from flask import Flask, redirect, url_for, request
+app = Flask(__name__)
+import mysql.connector as mariadb
+import datetime
+
+
+app = Flask(__name__)
+
+
+
+# UTILITY FUNCTIONS
+
+def decode(var):
+        if isinstance(var,bytearray):
+                return var.decode('utf-8')
+        if isinstance(var,datetime.date):
+                return str(var)
+        if isinstance(var,int):
+                return var
+        if isinstance(var,str):
+                return var
+        return
+
+def dictfetchall(cursor):
+    desc = cursor.description
+    return [dict(zip([col[0] for col in desc], map(decode,row)))
+            for row in cursor.fetchall()]
+
+
+# MAIN FUNCTIONS
+@app.route('/')
+def index():
+	return "Index Page"
+
+
+@app.route('/update',methods = ['POST'])
+def add_into_db():
+
+	#getting post requests
+
+
+	url = str(request.form['url'])
+	time = str(request.form['time'])
+	tabid = str(request.form['tabid'])
+
+	#Database Connection
+
+	mariadb_connection = mariadb.connect(host="localhost",user='root', password='lugia', database='t1')
+	cursor = mariadb_connection.cursor(prepared = True)
+	cursor.execute("INSERT INTO t1(url,time) VALUES (?,?)",(url,time))
+	#cp = dictfetchall(cursor)
+	cursor.close()
+	cursor = mariadb_connection.cursor(prepared = True)
+	cursor.execute("SELECT COUNT(id) FROM t1")
+	testv = dictfetchall(cursor)
+	cursor.close()
+
+
+	mariadb_connection.commit()
+	mariadb_connection.close()
+	#n = str((cp[0]['COUNT(id)']))
+
+
+	return str(testv['])
+
+
+if __name__ == '__main__':
+	app.run(debug = True )

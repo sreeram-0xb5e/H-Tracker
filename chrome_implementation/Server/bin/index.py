@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request,render_template
 app = Flask(__name__)
 import mysql.connector as mariadb
 import datetime
@@ -50,12 +50,19 @@ def add_into_db():
 	cursor.execute("INSERT INTO t1(url,time) VALUES (?,?)",(url,time))
 	#cp = dictfetchall(cursor)
 	cursor.close()
+	cursor = mariadb_connection.cursor(prepared = True)
+	cursor.execute("SELECT COUNT(id) FROM t1")
+	testv = dictfetchall(cursor)
+	cursor.close()
+
+
 	mariadb_connection.commit()
 	mariadb_connection.close()
-	#n = str((cp[0]['COUNT(id)']))
+	#n = str((cp[0]))
 
 
-	return "Done!"
+	#return str(testv[0]['COUNT(id)'])
+	return render_template('graph.html',testv = testv[0]['COUNT(id)'])
 
 
 if __name__ == '__main__':
